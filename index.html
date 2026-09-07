@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elang Satria Pratama — Junior Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #EEF1EE;
+    --surface: #FFFFFF;
+    --ink: #1B2430;
+    --ink-soft: #4B5563;
+    --line: #D6DCD8;
+    --accent: #2F6F4E;
+    --accent-soft: #E4EEE7;
+    --link: #3A5A78;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: var(--link); }
+
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  header.hero{
+    padding: 88px 0 56px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .kicker{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    margin: 0 0 18px;
+  }
+
+  h1{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(38px, 6vw, 58px);
+    line-height: 1.08;
+    margin: 0 0 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .lede{
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 52ch;
+    margin: 0 0 32px;
+  }
+
+  .hero-links{
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 15px;
+  }
+
+  .hero-links a{
+    text-decoration: none;
+    border-bottom: 1px solid var(--link);
+    padding-bottom: 2px;
+  }
+
+  section{
+    padding: 56px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  section:last-of-type{ border-bottom: none; }
+
+  .section-label{
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+    font-weight: 500;
+  }
+
+  h2{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 28px;
+    margin: 0 0 24px;
+  }
+
+  .about p{
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0 0 16px;
+  }
+
+  .about strong{ color: var(--ink); font-weight: 600; }
+
+  .project{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 32px;
+  }
+
+  .project-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+
+  .project h3{
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .project .stack-line{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--accent);
+  }
+
+  .project .summary{
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin: 14px 0 22px;
+    max-width: 58ch;
+  }
+
+  .feature-rows{
+    border-top: 1px solid var(--line);
+  }
+
+  .feature-row{
+    display: flex;
+    gap: 18px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px;
+  }
+
+  .feature-row .tag{
+    flex: 0 0 150px;
+    color: var(--ink-soft);
+    font-size: 13px;
+  }
+
+  .feature-row .detail{ flex: 1; }
+
+  .chips{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 22px 0 24px;
+  }
+
+  .chip{
+    font-size: 13px;
+    padding: 5px 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 3px;
+  }
+
+  .project-link{
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid var(--link);
+    padding-bottom: 2px;
+  }
+
+  .skills-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 40px;
+  }
+
+  .skill-group h4{
+    font-size: 14px;
+    text-transform: none;
+    color: var(--ink);
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+
+  .skill-group ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--ink-soft);
+    font-size: 15px;
+  }
+
+  .skill-group li{ padding: 3px 0; }
+
+  .learning{
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px dashed var(--line);
+  }
+
+  .learning h4{
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: var(--ink);
+  }
+
+  .learning .note{
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
+  }
+
+  footer.contact{
+    padding: 64px 0 88px;
+  }
+
+  footer.contact h2{ margin-bottom: 14px; }
+
+  footer.contact p{
+    color: var(--ink-soft);
+    font-size: 16px;
+    max-width: 50ch;
+    margin: 0 0 28px;
+  }
+
+  .contact-row{
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .contact-item{ font-size: 15px; }
+
+  .contact-item .label{
+    display: block;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-bottom: 3px;
+  }
+
+  .contact-item a{
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid var(--link);
+    padding-bottom: 1px;
+  }
+
+  @media (max-width: 560px){
+    header.hero{ padding: 56px 0 40px; }
+    section{ padding: 40px 0; }
+    .skills-grid{ grid-template-columns: 1fr; }
+    .feature-row{ flex-direction: column; gap: 4px; }
+    .feature-row .tag{ flex: none; }
+    .project{ padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="kicker">Elang Satria Pratama</p>
+    <h1>Junior Web Developer</h1>
+    <p class="lede">Membangun aplikasi web dari struktur database sampai antarmuka pengguna — dengan latar belakang yang mengajarkan saya memahami kebutuhan orang lebih dulu, sebelum menulis kode.</p>
+    <div class="hero-links">
+      <a href="mailto:elang1089@gmail.com">elang1089@gmail.com</a>
+      <a href="https://github.com/eglknght" target="_blank" rel="noopener">github.com/eglknght</a>
+    </div>
+  </header>
+
+  <section class="about">
+    <p class="section-label">Tentang Saya</p>
+    <h2>Dari sales ke backend</h2>
+    <p>Saya belajar web development lewat kursus di <strong>Coursenet</strong>, sambil menjalani kuliah di <strong>Universitas Terbuka</strong> dan bekerja penuh waktu di bidang sales. Latar belakang di sales membiasakan saya untuk memahami masalah dari sudut pandang pengguna dulu, baru mencari solusinya — kebiasaan yang saya bawa ke cara saya menyusun struktur aplikasi.</p>
+    <p>Saat ini saya fokus memperkuat fondasi backend (Node.js, Express, MySQL) dan sedang memperdalam <strong>React.js</strong> serta integrasi <strong>REST API</strong> untuk melengkapi kemampuan full-stack saya.</p>
+  </section>
+
+  <section class="projects">
+    <p class="section-label">Proyek</p>
+    <h2>Proyek Unggulan</h2>
+
+    <div class="project">
+      <div class="project-row">
+        <h3>Inventory Management System</h3>
+      </div>
+      <p class="stack-line">Node.js · Express · MySQL · EJS</p>
+      <p class="summary">Aplikasi manajemen inventaris berbasis web dengan sistem autentikasi dan kontrol akses bertingkat, dibangun dengan arsitektur MVC untuk memisahkan logic, data, dan tampilan secara jelas.</p>
+
+      <div class="feature-rows">
+        <div class="feature-row">
+          <span class="tag">Autentikasi</span>
+          <span class="detail">Login &amp; register menggunakan Passport.js, password ter-hash dengan bcryptjs, sesi dikelola lewat express-session.</span>
+        </div>
+        <div class="feature-row">
+          <span class="tag">Kontrol akses</span>
+          <span class="detail">Role-based access — hak akses admin dan staff dibedakan sesuai kewenangan masing-masing.</span>
+        </div>
+        <div class="feature-row">
+          <span class="tag">Manajemen data</span>
+          <span class="detail">CRUD penuh untuk data inventaris (tambah, ubah, hapus barang), tersimpan di database relasional MySQL.</span>
+        </div>
+        <div class="feature-row">
+          <span class="tag">Rendering</span>
+          <span class="detail">Server-side rendering dengan EJS, mengikuti pola MVC (config, controller, model, view).</span>
+        </div>
+      </div>
+
+      <div class="chips">
+        <span class="chip">Express.js</span>
+        <span class="chip">MySQL (mysql2)</span>
+        <span class="chip">Passport.js</span>
+        <span class="chip">bcryptjs</span>
+        <span class="chip">EJS</span>
+      </div>
+
+      <a class="project-link" href="https://github.com/Eglknght/nodejs-inventory" target="_blank" rel="noopener">Lihat kode di GitHub →</a>
+    </div>
+  </section>
+
+  <section class="skills">
+    <p class="section-label">Kemampuan</p>
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h4>Backend</h4>
+        <ul>
+          <li>Node.js</li>
+          <li>Express.js</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Database</h4>
+        <ul>
+          <li>MySQL</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Autentikasi &amp; Sesi</h4>
+        <ul>
+          <li>Passport.js</li>
+          <li>bcryptjs</li>
+          <li>express-session</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Templating &amp; Tools</h4>
+        <ul>
+          <li>EJS</li>
+          <li>Git &amp; GitHub</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="learning">
+      <h4>Sedang dipelajari</h4>
+      <p class="note">React.js dan integrasi REST API — untuk melengkapi kemampuan backend dengan sisi frontend yang lebih modern.</p>
+    </div>
+  </section>
+
+  <footer class="contact">
+    <p class="section-label">Kontak</p>
+    <h2>Mari terhubung</h2>
+    <p>Terbuka untuk kesempatan sebagai Junior Web Developer. Silakan hubungi saya lewat email atau lihat proyek lainnya di GitHub.</p>
+    <div class="contact-row">
+      <div class="contact-item">
+        <span class="label">Email</span>
+        <a href="mailto:elang1089@gmail.com">elang1089@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="label">GitHub</span>
+        <a href="https://github.com/eglknght" target="_blank" rel="noopener">github.com/eglknght</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
