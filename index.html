@@ -183,6 +183,13 @@
     border-radius: 3px;
   }
 
+  .project-links{
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
   .project-link{
     display: inline-block;
     font-size: 15px;
@@ -190,6 +197,26 @@
     text-decoration: none;
     border-bottom: 1px solid var(--link);
     padding-bottom: 2px;
+  }
+
+  .project-link.secondary{
+    color: var(--ink-soft);
+    border-bottom-color: var(--ink-soft);
+  }
+
+  .demo-note{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .demo-note code{
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 12.5px;
   }
 
   .skills-grid{
@@ -338,7 +365,11 @@
         <span class="chip">EJS</span>
       </div>
 
-      <a class="project-link" href="https://github.com/Eglknght/nodejs-inventory" target="_blank" rel="noopener">Lihat kode di GitHub →</a>
+      <div class="project-links">
+        <a class="project-link" href="https://nodejs-inventory-production.up.railway.app/" target="_blank" rel="noopener">Coba Demo →</a>
+        <a class="project-link secondary" href="https://github.com/Eglknght/nodejs-inventory" target="_blank" rel="noopener">Lihat Kode di GitHub →</a>
+      </div>
+      <p class="demo-note">Demo login — user: <code>demo</code> · password: <code>admin</code></p>
     </div>
   </section>
 
