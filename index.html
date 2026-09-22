@@ -336,32 +336,41 @@
         <h3>Inventory Management System</h3>
       </div>
       <p class="stack-line">Node.js · Express · MySQL · EJS</p>
-      <p class="summary">Aplikasi manajemen inventaris berbasis web dengan sistem autentikasi dan kontrol akses bertingkat, dibangun dengan arsitektur MVC untuk memisahkan logic, data, dan tampilan secara jelas.</p>
+      <p class="summary">Aplikasi manajemen inventaris berbasis web dengan sistem autentikasi, kontrol akses bertingkat, dan visualisasi data, dibangun dengan arsitektur MVC untuk memisahkan logic, data, dan tampilan secara jelas.</p>
 
       <div class="feature-rows">
         <div class="feature-row">
           <span class="tag">Autentikasi</span>
-          <span class="detail">Login &amp; register menggunakan Passport.js, password ter-hash dengan bcryptjs, sesi dikelola lewat express-session.</span>
+          <span class="detail">Session-based auth kustom (express-session), password ter-hash dengan bcryptjs, dilengkapi middleware pencegah akses halaman terproteksi lewat tombol back setelah logout.</span>
         </div>
         <div class="feature-row">
           <span class="tag">Kontrol akses</span>
-          <span class="detail">Role-based access — hak akses admin dan staff dibedakan sesuai kewenangan masing-masing.</span>
+          <span class="detail">Role-based access — hak akses admin dan staff dibedakan sesuai kewenangan masing-masing, diterapkan di level route/middleware.</span>
+        </div>
+        <div class="feature-row">
+          <span class="tag">Dashboard</span>
+          <span class="detail">Ringkasan data real-time (total produk, kategori, stok menipis) dan doughnut chart distribusi stok per kategori menggunakan Chart.js.</span>
+        </div>
+        <div class="feature-row">
+          <span class="tag">Transaksi stok</span>
+          <span class="detail">Form stok masuk/keluar dengan pencarian produk client-side (autocomplete tanpa reload) yang mendukung pemilihan beberapa produk sekaligus, lengkap dengan validasi kecukupan stok.</span>
+        </div>
+        <div class="feature-row">
+          <span class="tag">Laporan</span>
+          <span class="detail">Riwayat stok yang bisa difilter per produk (termasuk tampilan "Semua Produk") dan rentang tanggal, dengan export ke CSV/Excel/PDF/Print.</span>
         </div>
         <div class="feature-row">
           <span class="tag">Manajemen data</span>
-          <span class="detail">CRUD penuh untuk data inventaris (tambah, ubah, hapus barang), tersimpan di database relasional MySQL.</span>
-        </div>
-        <div class="feature-row">
-          <span class="tag">Rendering</span>
-          <span class="detail">Server-side rendering dengan EJS, mengikuti pola MVC (config, controller, model, view).</span>
+          <span class="detail">CRUD penuh untuk produk dan kategori, tersimpan di database relasional MySQL.</span>
         </div>
       </div>
 
       <div class="chips">
         <span class="chip">Express.js</span>
         <span class="chip">MySQL (mysql2)</span>
-        <span class="chip">Passport.js</span>
         <span class="chip">bcryptjs</span>
+        <span class="chip">express-session</span>
+        <span class="chip">Chart.js</span>
         <span class="chip">EJS</span>
       </div>
 
@@ -393,7 +402,6 @@
       <div class="skill-group">
         <h4>Autentikasi &amp; Sesi</h4>
         <ul>
-          <li>Passport.js</li>
           <li>bcryptjs</li>
           <li>express-session</li>
         </ul>
