@@ -1,442 +1,165 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elang Satria Pratama — Junior Web Developer</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inventory Management System · Elang Satria Pratama</title>
+<meta name="description" content="A role-based inventory app with stock tracking and reports, built with Node.js, Express, EJS and PostgreSQL.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg: #EEF1EE;
-    --surface: #FFFFFF;
-    --ink: #1B2430;
-    --ink-soft: #4B5563;
-    --line: #D6DCD8;
-    --accent: #2F6F4E;
-    --accent-soft: #E4EEE7;
-    --link: #3A5A78;
-  }
+:root{
+  --paper:#dcd8d0; --card:#e8e5de; --ink:#1c1b19; --muted:#45423c; --rule:#c3beb3;
+  --in:#0d7a5f; --accent:#1c1b19; --accent-ink:#e8e5de; --code:#cdc8be;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 "Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:"Bricolage Grotesque","Instrument Sans",system-ui,sans-serif;line-height:1.1;margin:0}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--in);outline-offset:3px}
 
-  *{ box-sizing: border-box; }
+/* hero */
+.hero{padding:72px 0 48px;border-bottom:1px solid var(--rule)}
+.hero h1{font-size:clamp(2.4rem,6.5vw,4.6rem);font-weight:800;letter-spacing:-.02em;max-width:14ch}
+.hero p.lead{font-size:1.2rem;color:var(--muted);max-width:56ch;margin:20px 0 28px}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:12px 20px;border-radius:6px;font-weight:600;text-decoration:none;border:2px solid var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.demo{margin-top:20px;color:var(--muted);font-size:.95rem}
+code{background:var(--code);padding:2px 6px;border-radius:4px;font:500 .9em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 
-  html{ scroll-behavior: smooth; }
+/* sections */
+section{padding:56px 0;border-bottom:1px solid var(--rule)}
+section>.wrap>h2{font-size:clamp(1.6rem,3.4vw,2.2rem);font-weight:800;margin-bottom:24px;letter-spacing:-.01em}
+dl{margin:0;display:grid;grid-template-columns:minmax(150px,240px) 1fr;column-gap:32px}
+dt{font-weight:600;padding:16px 0;border-top:1px solid var(--rule)}
+dd{margin:0;padding:16px 0;border-top:1px solid var(--rule);color:var(--muted);max-width:62ch}
+.stack{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+.stack li{border:1px solid var(--rule);background:var(--card);border-radius:999px;padding:6px 16px;font-weight:500}
+.prose{max-width:64ch;color:var(--muted)}
+.prose strong{color:var(--ink)}
+ol.steps{max-width:68ch;padding-left:22px;margin:0 0 20px}
+ol.steps li{margin-bottom:10px}
+pre{background:var(--code);padding:16px;border-radius:8px;overflow-x:auto;margin:0;font:500 .88rem/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.shots figure{margin:0}
+.shots img{width:100%;height:auto;border:1px solid var(--rule);border-radius:8px;display:block}
+.shots figcaption{font-size:.9rem;color:var(--muted);margin-top:8px}
+footer{padding:40px 0 64px;color:var(--muted)}
+footer .links{display:flex;flex-wrap:wrap;gap:20px;margin-top:8px}
+footer a{color:var(--ink);font-weight:600}
 
-  body{
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  a{ color: var(--link); }
-
-  .wrap{
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 0 28px;
-  }
-
-  header.hero{
-    padding: 88px 0 56px;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .kicker{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    letter-spacing: 0.02em;
-    margin: 0 0 18px;
-  }
-
-  h1{
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: clamp(38px, 6vw, 58px);
-    line-height: 1.08;
-    margin: 0 0 20px;
-    letter-spacing: -0.01em;
-  }
-
-  .lede{
-    font-size: 18px;
-    color: var(--ink-soft);
-    max-width: 52ch;
-    margin: 0 0 32px;
-  }
-
-  .hero-links{
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-    font-size: 15px;
-  }
-
-  .hero-links a{
-    text-decoration: none;
-    border-bottom: 1px solid var(--link);
-    padding-bottom: 2px;
-  }
-
-  section{
-    padding: 56px 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  section:last-of-type{ border-bottom: none; }
-
-  .section-label{
-    font-size: 14px;
-    color: var(--ink-soft);
-    margin: 0 0 8px;
-    font-weight: 500;
-  }
-
-  h2{
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 28px;
-    margin: 0 0 24px;
-  }
-
-  .about p{
-    font-size: 17px;
-    color: var(--ink-soft);
-    max-width: 62ch;
-    margin: 0 0 16px;
-  }
-
-  .about strong{ color: var(--ink); font-weight: 600; }
-
-  .project{
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 32px;
-  }
-
-  .project-row{
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 4px;
-  }
-
-  .project h3{
-    font-family: 'Fraunces', serif;
-    font-size: 22px;
-    font-weight: 600;
-    margin: 0;
-  }
-
-  .project .stack-line{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12.5px;
-    color: var(--accent);
-  }
-
-  .project .summary{
-    font-size: 16px;
-    color: var(--ink-soft);
-    margin: 14px 0 22px;
-    max-width: 58ch;
-  }
-
-  .feature-rows{
-    border-top: 1px solid var(--line);
-  }
-
-  .feature-row{
-    display: flex;
-    gap: 18px;
-    padding: 13px 0;
-    border-bottom: 1px solid var(--line);
-    font-size: 15px;
-  }
-
-  .feature-row .tag{
-    flex: 0 0 150px;
-    color: var(--ink-soft);
-    font-size: 13px;
-  }
-
-  .feature-row .detail{ flex: 1; }
-
-  .chips{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 22px 0 24px;
-  }
-
-  .chip{
-    font-size: 13px;
-    padding: 5px 12px;
-    background: var(--accent-soft);
-    color: var(--accent);
-    border-radius: 3px;
-  }
-
-  .project-links{
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
-
-  .project-link{
-    display: inline-block;
-    font-size: 15px;
-    font-weight: 500;
-    text-decoration: none;
-    border-bottom: 1px solid var(--link);
-    padding-bottom: 2px;
-  }
-
-  .project-link.secondary{
-    color: var(--ink-soft);
-    border-bottom-color: var(--ink-soft);
-  }
-
-  .demo-note{
-    font-size: 13.5px;
-    color: var(--ink-soft);
-    margin: 0;
-  }
-
-  .demo-note code{
-    font-family: 'IBM Plex Mono', monospace;
-    background: var(--accent-soft);
-    color: var(--accent);
-    padding: 1px 6px;
-    border-radius: 3px;
-    font-size: 12.5px;
-  }
-
-  .skills-grid{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px 40px;
-  }
-
-  .skill-group h4{
-    font-size: 14px;
-    text-transform: none;
-    color: var(--ink);
-    margin: 0 0 8px;
-    font-weight: 600;
-  }
-
-  .skill-group ul{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    color: var(--ink-soft);
-    font-size: 15px;
-  }
-
-  .skill-group li{ padding: 3px 0; }
-
-  .learning{
-    margin-top: 32px;
-    padding-top: 24px;
-    border-top: 1px dashed var(--line);
-  }
-
-  .learning h4{
-    font-size: 14px;
-    font-weight: 600;
-    margin: 0 0 8px;
-    color: var(--ink);
-  }
-
-  .learning .note{
-    font-size: 14px;
-    color: var(--ink-soft);
-    margin: 0 0 10px;
-  }
-
-  footer.contact{
-    padding: 64px 0 88px;
-  }
-
-  footer.contact h2{ margin-bottom: 14px; }
-
-  footer.contact p{
-    color: var(--ink-soft);
-    font-size: 16px;
-    max-width: 50ch;
-    margin: 0 0 28px;
-  }
-
-  .contact-row{
-    display: flex;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-
-  .contact-item{ font-size: 15px; }
-
-  .contact-item .label{
-    display: block;
-    font-size: 12.5px;
-    color: var(--ink-soft);
-    margin-bottom: 3px;
-  }
-
-  .contact-item a{
-    text-decoration: none;
-    font-weight: 500;
-    border-bottom: 1px solid var(--link);
-    padding-bottom: 1px;
-  }
-
-  @media (max-width: 560px){
-    header.hero{ padding: 56px 0 40px; }
-    section{ padding: 40px 0; }
-    .skills-grid{ grid-template-columns: 1fr; }
-    .feature-row{ flex-direction: column; gap: 4px; }
-    .feature-row .tag{ flex: none; }
-    .project{ padding: 24px; }
-  }
+@media (max-width:700px){
+  .hero{padding:48px 0 36px}
+  dl{grid-template-columns:1fr}
+  dt{padding-bottom:0;border-bottom:0}
+  dd{border-top:0;padding-top:4px}
+}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <header class="hero">
-    <p class="kicker">Elang Satria Pratama</p>
-    <h1>Junior Web Developer</h1>
-    <p class="lede">Membangun aplikasi web dari struktur database sampai antarmuka pengguna — dengan latar belakang yang mengajarkan saya memahami kebutuhan orang lebih dulu, sebelum menulis kode.</p>
-    <div class="hero-links">
+<header class="hero">
+  <div class="wrap">
+    <h1>Inventory Management System</h1>
+    <p class="lead">A web app for tracking stock in and out, managing products and categories, and reading reports, with separate access for admins and employees.</p>
+    <div class="actions">
+      <a class="btn primary" href="https://inventory-elang.tokenkoding.xyz" target="_blank" rel="noopener">Open live demo</a>
+      <a class="btn ghost" href="https://github.com/Eglknght/nodejs-inventory" target="_blank" rel="noopener">View source on GitHub</a>
+    </div>
+    <p class="demo">Demo login: <code>demo</code> / <code>demo</code> (admin role)</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>What it does</h2>
+    <dl>
+      <dt>Sign in by role</dt>
+      <dd>Passport.js with bcrypt-hashed passwords and session login. Admins see every menu. Employees see the dashboard, stock in/out, and reports.</dd>
+      <dt>Products and categories</dt>
+      <dd>Add products with a code, description, and category. Categories are managed separately.</dd>
+      <dt>Stock in and stock out</dt>
+      <dd>Pick several products in one form with search-as-you-type, set a quantity for each, and save. Stock out is checked against what is available, and every movement is written to the stock history.</dd>
+      <dt>Dashboard</dt>
+      <dd>Summary cards for total products, total categories, and low-stock items, plus a doughnut chart of stock per category.</dd>
+      <dt>Reports</dt>
+      <dd>View all products or one product, and filter by date range. The filters stay in the URL, so a filtered report can be shared.</dd>
+      <dt>Safe logout</dt>
+      <dd>Logging out destroys the session and clears the cookie. A no-cache header stops the back button from reopening the dashboard.</dd>
+    </dl>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Built with</h2>
+    <ul class="stack">
+      <li>Node.js</li><li>Express</li><li>EJS</li><li>PostgreSQL</li><li>Passport.js</li><li>bcryptjs</li><li>HTML, CSS, JavaScript</li><li>MVC structure</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>From MySQL to PostgreSQL</h2>
+    <div class="prose">
+      <p>The app started on MySQL. When I moved it to a hosting plan that provides PostgreSQL, I migrated it instead of changing hosts.</p>
+      <p><strong>What changed:</strong> the connection pool now uses <code>pg</code>, table definitions use <code>SERIAL</code> keys, and inserts list their columns explicitly. The <code>user</code> table became <code>users</code>, because <code>user</code> is a reserved word in PostgreSQL. Counts are cast to integers so the dashboard receives numbers, not strings.</p>
+      <p><strong>Deployment:</strong> hosted on TokenKoding Vibe Deploy with a managed PostgreSQL database. Tables are created on first start, and the first admin account is created from environment variables.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Run it locally</h2>
+    <ol class="steps">
+      <li>Clone the repository and run <code>npm install</code>.</li>
+      <li>Create a PostgreSQL database and put its connection string in <code>.env</code> as <code>DATABASE_URL</code>.</li>
+      <li>Set <code>SESSION_SECRET</code>. Optionally set <code>ADMIN_USERNAME</code> and <code>ADMIN_PASSWORD</code> to create the first admin.</li>
+      <li>Run <code>node app.js</code>. The tables are created automatically on first start.</li>
+    </ol>
+<pre>git clone https://github.com/Eglknght/nodejs-inventory.git
+cd nodejs-inventory
+npm install
+node app.js</pre>
+  </div>
+</section>
+
+<section id="screenshots">
+  <div class="wrap">
+    <h2>Screens</h2>
+    <div class="shots">
+      <figure><img src="screenshots/dashboard.png" alt="Dashboard with summary cards and a doughnut chart" onerror="this.closest('figure').remove()"><figcaption>Dashboard</figcaption></figure>
+      <figure><img src="screenshots/stok-masuk.png" alt="Stock in form with multi-product selection" onerror="this.closest('figure').remove()"><figcaption>Stock in form</figcaption></figure>
+      <figure><img src="screenshots/laporan.png" alt="Report page with date filter" onerror="this.closest('figure').remove()"><figcaption>Report with date filter</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <strong style="color:var(--ink)">Elang Satria Pratama</strong>, aspiring junior web developer.
+    <div class="links">
+      <a href="https://github.com/Eglknght">GitHub: Eglknght</a>
       <a href="mailto:elang1089@gmail.com">elang1089@gmail.com</a>
-      <a href="https://github.com/eglknght" target="_blank" rel="noopener">github.com/eglknght</a>
     </div>
-  </header>
+  </div>
+</footer>
 
-  <section class="about">
-    <p class="section-label">Tentang Saya</p>
-    <h2>Dari sales ke backend</h2>
-    <p>Saya belajar web development lewat kursus di <strong>Coursenet</strong>, sambil menjalani kuliah di <strong>Universitas Terbuka</strong> dan bekerja penuh waktu di bidang sales. Latar belakang di sales membiasakan saya untuk memahami masalah dari sudut pandang pengguna dulu, baru mencari solusinya — kebiasaan yang saya bawa ke cara saya menyusun struktur aplikasi.</p>
-    <p>Saat ini saya fokus memperkuat fondasi backend (Node.js, Express, MySQL) dan sedang memperdalam <strong>React.js</strong> serta integrasi <strong>REST API</strong> untuk melengkapi kemampuan full-stack saya.</p>
-  </section>
-
-  <section class="projects">
-    <p class="section-label">Proyek</p>
-    <h2>Proyek Unggulan</h2>
-
-    <div class="project">
-      <div class="project-row">
-        <h3>Inventory Management System</h3>
-      </div>
-      <p class="stack-line">Node.js · Express · MySQL · EJS</p>
-      <p class="summary">Aplikasi manajemen inventaris berbasis web dengan sistem autentikasi, kontrol akses bertingkat, dan visualisasi data, dibangun dengan arsitektur MVC untuk memisahkan logic, data, dan tampilan secara jelas.</p>
-
-      <div class="feature-rows">
-        <div class="feature-row">
-          <span class="tag">Autentikasi</span>
-          <span class="detail">Session-based auth kustom (express-session), password ter-hash dengan bcryptjs, dilengkapi middleware pencegah akses halaman terproteksi lewat tombol back setelah logout.</span>
-        </div>
-        <div class="feature-row">
-          <span class="tag">Kontrol akses</span>
-          <span class="detail">Role-based access — hak akses admin dan staff dibedakan sesuai kewenangan masing-masing, diterapkan di level route/middleware.</span>
-        </div>
-        <div class="feature-row">
-          <span class="tag">Dashboard</span>
-          <span class="detail">Ringkasan data real-time (total produk, kategori, stok menipis) dan doughnut chart distribusi stok per kategori menggunakan Chart.js.</span>
-        </div>
-        <div class="feature-row">
-          <span class="tag">Transaksi stok</span>
-          <span class="detail">Form stok masuk/keluar dengan pencarian produk client-side (autocomplete tanpa reload) yang mendukung pemilihan beberapa produk sekaligus, lengkap dengan validasi kecukupan stok.</span>
-        </div>
-        <div class="feature-row">
-          <span class="tag">Laporan</span>
-          <span class="detail">Riwayat stok yang bisa difilter per produk (termasuk tampilan "Semua Produk") dan rentang tanggal, dengan export ke CSV/Excel/PDF/Print.</span>
-        </div>
-        <div class="feature-row">
-          <span class="tag">Manajemen data</span>
-          <span class="detail">CRUD penuh untuk produk dan kategori, tersimpan di database relasional MySQL.</span>
-        </div>
-      </div>
-
-      <div class="chips">
-        <span class="chip">Express.js</span>
-        <span class="chip">MySQL (mysql2)</span>
-        <span class="chip">bcryptjs</span>
-        <span class="chip">express-session</span>
-        <span class="chip">Chart.js</span>
-        <span class="chip">EJS</span>
-      </div>
-
-      <div class="project-links">
-        <a class="project-link" href="https://nodejs-inventory-production.up.railway.app/" target="_blank" rel="noopener">Coba Demo →</a>
-        <a class="project-link secondary" href="https://github.com/Eglknght/nodejs-inventory" target="_blank" rel="noopener">Lihat Kode di GitHub →</a>
-      </div>
-      <p class="demo-note">Demo login — user: <code>demo</code> · password: <code>admin</code></p>
-    </div>
-  </section>
-
-  <section class="skills">
-    <p class="section-label">Kemampuan</p>
-    <h2>Skills</h2>
-    <div class="skills-grid">
-      <div class="skill-group">
-        <h4>Backend</h4>
-        <ul>
-          <li>Node.js</li>
-          <li>Express.js</li>
-        </ul>
-      </div>
-      <div class="skill-group">
-        <h4>Database</h4>
-        <ul>
-          <li>MySQL</li>
-        </ul>
-      </div>
-      <div class="skill-group">
-        <h4>Autentikasi &amp; Sesi</h4>
-        <ul>
-          <li>bcryptjs</li>
-          <li>express-session</li>
-        </ul>
-      </div>
-      <div class="skill-group">
-        <h4>Templating &amp; Tools</h4>
-        <ul>
-          <li>EJS</li>
-          <li>Git &amp; GitHub</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="learning">
-      <h4>Sedang dipelajari</h4>
-      <p class="note">React.js dan integrasi REST API — untuk melengkapi kemampuan backend dengan sisi frontend yang lebih modern.</p>
-    </div>
-  </section>
-
-  <footer class="contact">
-    <p class="section-label">Kontak</p>
-    <h2>Mari terhubung</h2>
-    <p>Terbuka untuk kesempatan sebagai Junior Web Developer. Silakan hubungi saya lewat email atau lihat proyek lainnya di GitHub.</p>
-    <div class="contact-row">
-      <div class="contact-item">
-        <span class="label">Email</span>
-        <a href="mailto:elang1089@gmail.com">elang1089@gmail.com</a>
-      </div>
-      <div class="contact-item">
-        <span class="label">GitHub</span>
-        <a href="https://github.com/eglknght" target="_blank" rel="noopener">github.com/eglknght</a>
-      </div>
-    </div>
-  </footer>
-</div>
-
+<script>
+// Hide the Screens section if no screenshot files are present.
+window.addEventListener('load', function () {
+  var sec = document.getElementById('screenshots');
+  if (sec && !sec.querySelector('figure')) sec.remove();
+});
+</script>
 </body>
 </html>
